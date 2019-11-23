@@ -9,6 +9,7 @@
   import Header from './components/Header.vue';
   import EmployeeList from './components/EmployeeList.vue';
   import API from './services/API';
+  import * as moment from 'moment';
 
   export default {
     data() {
@@ -22,13 +23,19 @@
           { key: 'gender', label: 'Gender' },
           { key: 'department', label: 'Department' },
           { key: 'date', label: 'Start Date' },
+          { key: 'daysPassed', label: 'Days Worked'}
         ],
         employees: []
       }
     },
     created() {
       API.getEmployees().then(data => {
-        this.employees = data;
+        const newData = data.map(emp => {
+          const empStartDate = moment(emp.date, 'M/D/YYYY');
+          emp.daysPassed = `${moment().diff(empStartDate, 'days')} days`;
+          return emp;
+        });
+        this.employees = newData;
       });
     },
     name: 'app',
