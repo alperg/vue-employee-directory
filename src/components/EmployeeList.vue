@@ -3,7 +3,7 @@
     <b-table striped hover :items="employees" :fields="fields">
       <!-- A custom formatted column -->
       <template v-slot:cell(avatar)="data">
-        <img :src="data.value">
+        <img :src="data.value" alt="employee">
       </template>
     </b-table>
   </div>
